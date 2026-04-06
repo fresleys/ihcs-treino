@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano Elite — Recomposição Corporal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --bg3: #1a1a1a;
+  --bg4: #222222;
+  --accent: #c8f135;
+  --accent2: #f1a235;
+  --accent3: #35c8f1;
+  --red: #f14235;
+  --text: #f0f0f0;
+  --text2: #999;
+  --text3: #555;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --r: 10px;
+  --r2: 6px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--font-display);line-height:1.1;font-weight:700}
+
+/* HERO */
+.hero{background:var(--bg2);border-bottom:1px solid var(--border2);padding:28px 20px 24px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-40px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(200,241,53,.12) 0%,transparent 70%);pointer-events:none}
+.hero-label{font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.hero h1{font-size:38px;letter-spacing:-.5px;color:#fff;font-weight:900}
+.hero h1 span{color:var(--accent)}
+.hero-sub{font-size:13px;color:var(--text2);margin-top:8px;max-width:340px}
+.hero-stats{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap}
+.hstat{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:10px 14px;flex:1;min-width:80px}
+.hstat-val{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--accent);line-height:1}
+.hstat-label{font-size:10px;color:var(--text2);margin-top:3px;letter-spacing:.04em}
+
+/* NAV */
+.nav-wrap{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 12px}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:8px 0}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{flex-shrink:0;font-family:var(--font-display);font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:7px 14px;border-radius:var(--r2);border:none;background:transparent;color:var(--text2);cursor:pointer;transition:all .2s;white-space:nowrap}
+.nav-btn.on{background:var(--accent);color:#000}
+.nav-btn:active{transform:scale(.96)}
+
+/* MAIN */
+.main{padding:0 0 80px}
+.page{display:none;animation:fadeUp .3s ease}
+.page.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION TITLE */
+.sec-head{padding:24px 20px 12px}
+.sec-title{font-family:var(--font-display);font-size:28px;font-weight:900;color:#fff;letter-spacing:-.3px}
+.sec-title span{color:var(--accent)}
+.sec-desc{font-size:13px;color:var(--text2);margin-top:4px;line-height:1.5}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:0 12px 10px;overflow:hidden}
+.card-head{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;user-select:none}
+.card-head:active{background:var(--bg3)}
+.card-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff;line-height:1.2}
+.card-sub{font-size:11px;color:var(--text2);margin-top:2px}
+.card-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:transform .3s}
+.card-icon.open{transform:rotate(45deg)}
+.card-body{display:none;border-top:1px solid var(--border);padding:0}
+.card-body.open{display:block}
+
+/* EXERCISES */
+.ex-list{padding:4px 0}
+.ex{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start}
+.ex:last-child{border-bottom:none}
+.ex-num{font-family:var(--font-display);font-size:22px;font-weight:900;color:var(--border2);min-width:28px;line-height:1;margin-top:1px}
+.ex-info{flex:1}
+.ex-name{font-size:14px;font-weight:500;color:#fff}
+.ex-sets{font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--accent);margin-top:2px}
+.ex-tip{font-size:12px;color:var(--text2);margin-top:4px;padding:6px 10px;background:var(--bg3);border-radius:var(--r2);border-left:2px solid var(--accent);line-height:1.5}
+.ex-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:4px;margin-right:4px;margin-top:4px}
+.tag-drop{background:rgba(241,162,53,.15);color:var(--accent2)}
+.tag-rp{background:rgba(53,200,241,.15);color:var(--accent3)}
+.tag-neg{background:rgba(200,241,53,.15);color:var(--accent)}
+.tag-ss{background:rgba(241,66,53,.15);color:var(--red)}
+.ex-video{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:11px;font-weight:600;color:var(--red);text-decoration:none;background:rgba(241,66,53,.1);border:1px solid rgba(241,66,53,.25);border-radius:4px;padding:3px 9px;letter-spacing:.03em;transition:background .2s}
+.ex-video:active{background:rgba(241,66,53,.2)}
+.ex-video svg{width:11px;height:11px;fill:var(--red);flex-shrink:0}
+
+/* MODAL OVERLAY */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);width:100%;max-width:560px;overflow:hidden}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border)}
+.modal-title{font-family:var(--font-display);font-size:16px;font-weight:700;color:#fff}
+.modal-close{background:var(--bg3);border:none;color:var(--text2);font-size:18px;width:28px;height:28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-frame{position:relative;padding-bottom:56.25%;height:0;overflow:hidden}
+.modal-frame iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.modal-link{display:block;text-align:center;padding:10px;font-size:12px;color:var(--text2);text-decoration:none;border-top:1px solid var(--border)}
+.modal-link span{color:var(--accent3)}
+
+/* ALERT BOXES */
+.alert{margin:0 12px 10px;border-radius:var(--r);padding:13px 16px;font-size:13px;line-height:1.6}
+.alert-title{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:4px}
+.alert-g{background:rgba(200,241,53,.08);border:1px solid rgba(200,241,53,.2);color:#c8f135}
+.alert-a{background:rgba(241,162,53,.08);border:1px solid rgba(241,162,53,.2);color:var(--accent2)}
+.alert-r{background:rgba(241,66,53,.08);border:1px solid rgba(241,66,53,.2);color:var(--red)}
+.alert-b{background:rgba(53,200,241,.08);border:1px solid rgba(53,200,241,.2);color:var(--accent3)}
+.alert p{color:rgba(255,255,255,.75);margin-top:3px;font-size:13px}
+
+/* METRICS GRID */
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 12px;margin-bottom:10px}
+.metrics-4{grid-template-columns:repeat(4,1fr)}
+.metric{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:12px 10px;text-align:center}
+.metric-val{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--accent);line-height:1}
+.metric-label{font-size:10px;color:var(--text2);margin-top:3px;line-height:1.3}
+
+/* ROWS */
+.info-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:0 12px 10px;overflow:hidden}
+.info-row{display:flex;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border);align-items:flex-start}
+.info-row:last-child{border-bottom:none}
+.info-label{font-size:11px;font-weight:500;color:var(--text3);min-width:88px;flex-shrink:0;padding-top:1px;text-transform:uppercase;letter-spacing:.04em}
+.info-val{font-size:13px;color:var(--text);line-height:1.5}
+.info-val strong{color:var(--accent);font-weight:500}
+
+/* MEALS */
+.meal-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:0 12px 10px;overflow:hidden}
+.meal{padding:13px 16px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start}
+.meal:last-child{border-bottom:none}
+.meal-time-block{min-width:52px;flex-shrink:0;text-align:center;padding-top:2px}
+.meal-time{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--accent);line-height:1}
+.meal-label{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-top:2px}
+.meal-divider{width:1px;background:var(--border2);align-self:stretch;flex-shrink:0}
+.meal-info{flex:1}
+.meal-name{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;color:var(--text2);margin-bottom:3px}
+.meal-desc{font-size:13px;color:#fff;line-height:1.5}
+.meal-macro{font-size:11px;color:var(--text2);margin-top:5px;display:flex;gap:8px;flex-wrap:wrap}
+.macro-pill{background:var(--bg3);border-radius:4px;padding:2px 7px}
+.macro-prot{color:var(--accent)}
+.macro-cal{color:var(--accent2)}
+.macro-note{color:var(--text3)}
+
+/* RULES */
+.rule-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:0 12px 10px;overflow:hidden}
+.rule{padding:15px 16px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:flex-start}
+.rule:last-child{border-bottom:none}
+.rule-num{font-family:var(--font-display);font-size:40px;font-weight:900;color:var(--bg4);line-height:1;min-width:38px}
+.rule-content{}
+.rule-title{font-size:14px;font-weight:500;color:#fff;margin-bottom:3px}
+.rule-desc{font-size:12px;color:var(--text2);line-height:1.6}
+
+/* SUPP */
+.supp-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin:0 12px 10px;overflow:hidden}
+.supp{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start}
+.supp:last-child{border-bottom:none}
+.supp-badge{min-width:70px;flex-shrink:0}
+.supp-name{font-size:14px;font-weight:500;color:#fff;margin-top:2px}
+.supp-dose{font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--accent);margin-top:1px}
+.supp-desc{font-size:12px;color:var(--text2);line-height:1.5;margin-top:4px}
+
+/* ERROR BLOCK */
+.error-block{background:var(--bg2);border:1px solid rgba(241,66,53,.25);border-left:3px solid var(--red);border-radius:var(--r);margin:0 12px 10px;padding:15px 16px}
+.error-title{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--red);margin-bottom:5px}
+.error-desc{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* DIVIDER LABEL */
+.divider-label{padding:8px 20px 4px;font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--text3)}
+
+/* BADGES */
+.badge{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:4px}
+.badge-g{background:rgba(200,241,53,.15);color:var(--accent)}
+.badge-a{background:rgba(241,162,53,.15);color:var(--accent2)}
+.badge-b{background:rgba(53,200,241,.15);color:var(--accent3)}
+.badge-r{background:rgba(241,66,53,.15);color:var(--red)}
+
+/* WEEK OVERVIEW */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 12px;margin-bottom:12px}
+.wday{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:8px 4px;text-align:center}
+.wday.active{background:var(--bg3);border-color:rgba(200,241,53,.3)}
+.wday-name{font-size:9px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--text3)}
+.wday-type{font-size:10px;font-weight:600;color:var(--text2);margin-top:3px;line-height:1.2}
+.wday.active .wday-type{color:var(--accent)}
+.wday-dot{width:6px;height:6px;border-radius:50%;background:var(--border2);margin:4px auto 0}
+.wday.active .wday-dot{background:var(--accent)}
+
+/* PROGRESS TRACKER */
+.tracker-wrap{padding:0 12px;margin-bottom:10px}
+.tracker-title{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:8px}
+.tracker-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.tracker-cell{aspect-ratio:1;border-radius:var(--r2);background:var(--bg3);border:1px solid var(--border);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text3)}
+.tracker-cell.done{background:rgba(200,241,53,.2);border-color:rgba(200,241,53,.4);color:var(--accent)}
+.tracker-cell:active{transform:scale(.92)}
+
+/* PHASE BANNER */
+.phase-banner{background:linear-gradient(90deg,rgba(200,241,53,.1) 0%,transparent 100%);border:1px solid rgba(200,241,53,.15);border-radius:var(--r);margin:0 12px 10px;padding:14px 16px;display:flex;align-items:center;gap:14px}
+.phase-num{font-family:var(--font-display);font-size:48px;font-weight:900;color:var(--accent);opacity:.3;line-height:1}
+.phase-info{}
+.phase-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff}
+.phase-desc{font-size:12px;color:var(--text2);margin-top:2px}
+
+/* BOTTOM NAV (mobile) */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);display:flex;padding:8px 4px env(safe-area-inset-bottom);z-index:200}
+.bn-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;border:none;background:transparent;cursor:pointer;color:var(--text3);transition:color .2s;-webkit-tap-highlight-color:transparent}
+.bn-btn.on{color:var(--accent)}
+.bn-icon{width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+.bn-icon svg{width:18px;height:18px;stroke-width:1.8;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.bn-label{font-size:9px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+
+/* SCROLL TO TOP */
+.scroll-top{position:fixed;bottom:76px;right:16px;width:36px;height:36px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;z-index:150}
+.scroll-top.visible{opacity:1;pointer-events:all}
+.scroll-top svg{width:16px;height:16px;stroke:black;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* RESPONSIVE */
+@media(min-width:640px){
+  .hero h1{font-size:52px}
+  .main-inner{max-width:680px;margin:0 auto}
+  .bottom-nav{display:none}
+  .nav-wrap{display:flex;justify-content:center}
+  .nav{justify-content:center}
+  .main{padding-bottom:40px}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="main-inner">
+    <div class="hero-label">Plano personalizado · 8 semanas · Bloco 1</div>
+    <h1>PLANO<br><span>ELITE</span></h1>
+    <div class="hero-sub">Recomposição corporal · Recuperação hormonal · Foco: peito, braços e ombro</div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-val">3–4x</div><div class="hstat-label">Treinos / semana</div></div>
+      <div class="hstat"><div class="hstat-val">90min</div><div class="hstat-label">Máximo por sessão</div></div>
+      <div class="hstat"><div class="hstat-val">240g</div><div class="hstat-label">Proteína / dia</div></div>
+      <div class="hstat"><div class="hstat-val">−350</div><div class="hstat-label">Déficit kcal</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOP NAV (desktop) -->
+<div class="nav-wrap">
+  <div class="nav">
+    <button class="nav-btn on" onclick="goPage('treino',this)">Treino</button>
+    <button class="nav-btn" onclick="goPage('dieta',this)">Dieta</button>
+    <button class="nav-btn" onclick="goPage('suplementos',this)">Suplementos</button>
+    <button class="nav-btn" onclick="goPage('hormonal',this)">Hormonal</button>
+    <button class="nav-btn" onclick="goPage('regras',this)">Regras</button>
+    <button class="nav-btn" onclick="goPage('erros',this)">Erros fatais</button>
+  </div>
+</div>
+
+<div class="main">
+<div class="main-inner">
+
+<!-- ===================== TREINO ===================== -->
+<div id="treino" class="page on">
+
+  <div class="sec-head">
+    <div class="sec-title">Estrutura de <span>Treino</span></div>
+    <div class="sec-desc">Push/Pull + Lower estratégico — foco dobrado em peito, ombro e braços</div>
+  </div>
+
+  <div class="alert alert-g">
+    <div class="alert-title">Estratégia de equilíbrio</div>
+    <p>Push aparece 2x/semana (segunda e quinta). Pull + Lower 1x cada. Costas e pernas estão no plano porque sem elas você não cresce peito nem braço — é bioquímica, não opinião.</p>
+  </div>
+
+  <!-- Visão semanal -->
+  <div class="divider-label">Semana padrão</div>
+  <div class="week">
+    <div class="wday active"><div class="wday-name">Seg</div><div class="wday-type">Push A</div><div class="wday-dot"></div></div>
+    <div class="wday active"><div class="wday-name">Ter</div><div class="wday-type">Pull A</div><div class="wday-dot"></div></div>
+    <div class="wday active"><div class="wday-name">Qua</div><div class="wday-type">Lower</div><div class="wday-dot"></div></div>
+    <div class="wday active"><div class="wday-name">Qui</div><div class="wday-type">Push B</div><div class="wday-dot"></div></div>
+    <div class="wday"><div class="wday-name">Sex</div><div class="wday-type">Off</div><div class="wday-dot"></div></div>
+    <div class="wday"><div class="wday-name">Sáb</div><div class="wday-type">Off</div><div class="wday-dot"></div></div>
+    <div class="wday"><div class="wday-name">Dom</div><div class="wday-type">Off</div><div class="wday-dot"></div></div>
+  </div>
+
+  <div class="alert alert-a">
+    <div class="alert-title">Se for só 3 dias</div>
+    <p>Retire a quarta (Lower). Mantenha Seg / Ter / Qui obrigatoriamente. Adicione Lower como 4º treino quando possível.</p>
+  </div>
+
+  <!-- SEGUNDA -->
+  <div class="card">
+    <div class="card-head" onclick="toggleCard('seg')">
+      <div>
+        <div class="card-title">Segunda — Push A</div>
+        <div class="card-sub"><span class="badge badge-b">Peito · Ombro · Tríceps</span> &nbsp;<span class="badge badge-g">Composto pesado</span></div>
+      </div>
+      <div class="card-icon" id="ico-seg">+</div>
+    </div>
+    <div class="card-body" id="seg">
+      <div class="ex-list">
+        <div class="ex">
+          <div class="ex-num">1</div>
+          <div class="ex-info">
+            <div class="ex-name">Supino reto com barra</div>
+            <div class="ex-sets">5 séries × 4–6 reps · descanso 3 min</div>
+            <a class="ex-video" onclick="openVideo('Supino reto com barra','dGFiTMEKdZs')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Âncora do treino. Carga máxima com técnica perfeita. Não substitua por halteres aqui — barra permite sobrecarga progressiva real.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">2</div>
+          <div class="ex-info">
+            <div class="ex-name">Supino inclinado com halteres</div>
+            <div class="ex-sets">4 séries × 8–10 reps · descanso 90s</div>
+            <span class="ex-tag tag-drop">Drop Set</span>
+            <a class="ex-video" onclick="openVideo('Supino inclinado com halteres','nM1DYqEHEGM')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Última série: drop set -30% da carga até falha. Foco na porção clavicular do peitoral.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">3</div>
+          <div class="ex-info">
+            <div class="ex-name">Desenvolvimento militar com halteres</div>
+            <div class="ex-sets">4 séries × 8–10 reps · descanso 90s</div>
+            <a class="ex-video" onclick="openVideo('Desenvolvimento militar com halteres','qEwKCR5JCog')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Cotovelos levemente à frente do plano do corpo. Ombro é 80% deltóide anterior — desenvolvimento pesado é insubstituível.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">4</div>
+          <div class="ex-info">
+            <div class="ex-name">Crucifixo inclinado (cabo ou haltere)</div>
+            <div class="ex-sets">3 séries × 12–15 reps · descanso 60s</div>
+            <a class="ex-video" onclick="openVideo('Crucifixo inclinado haltere','eozdVDA78K0')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Amplitude total com ênfase no alongamento. Faça logo após supino inclinado — pós-ativação máxima.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">5</div>
+          <div class="ex-info">
+            <div class="ex-name">Elevação lateral com halteres</div>
+            <div class="ex-sets">4 séries × 15 reps · descanso 60s</div>
+            <span class="ex-tag tag-rp">Rest-Pause</span>
+            <a class="ex-video" onclick="openVideo('Elevação lateral com halteres técnica','FeRqB90-OLQ')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Técnica estrita sem balanço. Última série: 10 reps + 15s pausa no rack + 5 reps forçadas.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">6</div>
+          <div class="ex-info">
+            <div class="ex-name">Tríceps corda + Tríceps testa</div>
+            <div class="ex-sets">3 rounds · 12 + 10 reps · 60s entre rounds</div>
+            <span class="ex-tag tag-ss">Superset</span>
+            <a class="ex-video" onclick="openVideo('Tríceps corda polia execução','AkTEWe36xHM')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução: Corda</a>
+            <a class="ex-video" onclick="openVideo('Tríceps testa com barra W execução','liv9g-c9TwQ')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução: Testa</a>
+            <div class="ex-tip">Tríceps é 2/3 do braço. Superset elimina 1 exercício extra e mantém pump alto. Sem descanso entre os dois movimentos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERÇA -->
+  <div class="card">
+    <div class="card-head" onclick="toggleCard('ter')">
+      <div>
+        <div class="card-title">Terça — Pull A</div>
+        <div class="card-sub"><span class="badge badge-b">Costas · Bíceps</span> &nbsp;<span class="badge badge-g">Volume alto</span></div>
+      </div>
+      <div class="card-icon" id="ico-ter">+</div>
+    </div>
+    <div class="card-body" id="ter">
+      <div class="ex-list">
+        <div class="ex">
+          <div class="ex-num">1</div>
+          <div class="ex-info">
+            <div class="ex-name">Terra convencional ou Remada curvada</div>
+            <div class="ex-sets">5 × 4–6 (Terra) ou 4 × 6–8 (Remada) · descanso 3 min</div>
+            <a class="ex-video" onclick="openVideo('Levantamento terra convencional execução','op9kVnSso6Q')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução: Terra</a>
+            <a class="ex-video" onclick="openVideo('Remada curvada barra execução','YBH-XEAH1sY')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução: Remada</a>
+            <div class="ex-tip">Terra = maior estimulador de testosterona e GH que existe. Com seu eixo em recuperação, esse exercício é obrigatório. Não negocie.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">2</div>
+          <div class="ex-info">
+            <div class="ex-name">Pulldown pegada aberta (ou barra fixa)</div>
+            <div class="ex-sets">4 séries × 8–10 reps · descanso 90s</div>
+            <a class="ex-video" onclick="openVideo('Pulldown pegada aberta execução correta','CAwf7n6Luuc')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Foco na adução da escápula — não no cotovelo. Se consegue 12+ na barra: adicione carga com colete.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">3</div>
+          <div class="ex-info">
+            <div class="ex-name">Remada unilateral com haltere</div>
+            <div class="ex-sets">3 séries × 10–12 por lado · 60s alternado</div>
+            <a class="ex-video" onclick="openVideo('Remada unilateral haltere execução','pYcpY20QaE8')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Puxe o cotovelo para trás e para cima — não o haltere. Diferença de ativação total.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">4</div>
+          <div class="ex-info">
+            <div class="ex-name">Rosca direta com barra W</div>
+            <div class="ex-sets">4 séries × 8–10 reps · descanso 90s</div>
+            <span class="ex-tag tag-neg">Negativa</span>
+            <a class="ex-video" onclick="openVideo('Rosca direta barra W execução biceps','zC3nLlEvin4')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Sem balanço do tronco. Última série: cheat curl controlado + negativa de 4 segundos em cada repetição.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">5</div>
+          <div class="ex-info">
+            <div class="ex-name">Rosca martelo + Rosca concentrada</div>
+            <div class="ex-sets">3 rounds · 10 + 12 reps · 60s entre rounds</div>
+            <span class="ex-tag tag-ss">Superset</span>
+            <a class="ex-video" onclick="openVideo('Rosca martelo haltere execução','TwD-YGVP4Bk')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução: Martelo</a>
+            <a class="ex-video" onclick="openVideo('Rosca concentrada biceps execução','Jvj2wV0vOYU')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução: Concentrada</a>
+            <div class="ex-tip">Martelo = braquial (espessura do braço). Concentrada = pico do bíceps. Juntos são letais para tamanho e definição.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUARTA -->
+  <div class="card">
+    <div class="card-head" onclick="toggleCard('qua')">
+      <div>
+        <div class="card-title">Quarta — Lower</div>
+        <div class="card-sub"><span class="badge badge-a">Pernas · Core</span> &nbsp;<span class="badge badge-b">Hormonal key</span></div>
+      </div>
+      <div class="card-icon" id="ico-qua">+</div>
+    </div>
+    <div class="card-body" id="qua">
+      <div style="padding:12px 16px;border-bottom:1px solid var(--border)">
+        <div class="alert alert-a" style="margin:0">
+          <div class="alert-title">Por que perna é obrigatória mesmo não sendo prioridade</div>
+          <p>Agachamento e Terra = maiores picos de GH + testosterona de todo o plano. Cortar legs = limitar crescimento de braços e peito. É bioquímica — corte somente se for absolutamente impossível (use como 4º treino).</p>
+        </div>
+      </div>
+      <div class="ex-list">
+        <div class="ex">
+          <div class="ex-num">1</div>
+          <div class="ex-info">
+            <div class="ex-name">Agachamento livre</div>
+            <div class="ex-sets">4 séries × 6–8 reps · descanso 3 min</div>
+            <a class="ex-video" onclick="openVideo('Agachamento livre execução correta','ultWZbUMPL8')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Profundidade completa, carga real. Maior pico hormonal de qualquer exercício isolado. Ponto final.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">2</div>
+          <div class="ex-info">
+            <div class="ex-name">Leg Press 45°</div>
+            <div class="ex-sets">3 séries × 10–12 reps · descanso 90s</div>
+            <a class="ex-video" onclick="openVideo('Leg press 45 execução técnica correta','IQFgUSe0lQA')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Amplitude completa, joelhos não travam no topo.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">3</div>
+          <div class="ex-info">
+            <div class="ex-name">Stiff romeno com halteres</div>
+            <div class="ex-sets">3 séries × 10–12 reps · descanso 90s</div>
+            <a class="ex-video" onclick="openVideo('Stiff romeno haltere execução isquiotibiais','tpczTeSkHz0')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Ênfase máxima no alongamento dos isquiotibiais. Controle total na descida.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">4</div>
+          <div class="ex-info">
+            <div class="ex-name">Mesa flexora</div>
+            <div class="ex-sets">3 séries × 12–15 reps</div>
+            <span class="ex-tag tag-drop">Drop Set</span>
+            <a class="ex-video" onclick="openVideo('Mesa flexora execução correta isquiotibiais','1Tq3QdYUuHs')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Drop set na última série.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">5</div>
+          <div class="ex-info">
+            <div class="ex-name">Prancha + Elevação de pernas</div>
+            <div class="ex-sets">3 rounds · 45s + 15 reps · 30s descanso</div>
+            <span class="ex-tag tag-ss">Superset</span>
+            <a class="ex-video" onclick="openVideo('Prancha abdominal execução e variações','ASdvN_XEl_c')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução: Prancha</a>
+            <a class="ex-video" onclick="openVideo('Elevação de pernas abdominal execução','JB2oyawG9KQ')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução: Elevação</a>
+            <div class="ex-tip">Core forte melhora performance em todos os compostos. Não subestime.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUINTA -->
+  <div class="card">
+    <div class="card-head" onclick="toggleCard('qui')">
+      <div>
+        <div class="card-title">Quinta — Push B</div>
+        <div class="card-sub"><span class="badge badge-b">Ombro · Peito · Tríceps</span> &nbsp;<span class="badge badge-g">Foco estético</span></div>
+      </div>
+      <div class="card-icon" id="ico-qui">+</div>
+    </div>
+    <div class="card-body" id="qui">
+      <div class="ex-list">
+        <div class="ex">
+          <div class="ex-num">1</div>
+          <div class="ex-info">
+            <div class="ex-name">Desenvolvimento Arnold com halteres</div>
+            <div class="ex-sets">4 séries × 10–12 reps · descanso 90s</div>
+            <a class="ex-video" onclick="openVideo('Desenvolvimento Arnold execução ombro','6Z15_WdXmVw')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Rotação completa — ativa os 3 feixes do deltóide simultaneamente. Melhor exercício de ombro para hipertrofia total.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">2</div>
+          <div class="ex-info">
+            <div class="ex-name">Supino declinado com halteres</div>
+            <div class="ex-sets">4 séries × 10–12 reps · descanso 90s</div>
+            <a class="ex-video" onclick="openVideo('Supino declinado haltere execução peitoral inferior','8iPEnn-ltC8')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Define o contorno inferior do peito — a linha que aparece com a recomposição.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">3</div>
+          <div class="ex-info">
+            <div class="ex-name">Elevação lateral unilateral no cabo</div>
+            <div class="ex-sets">4 séries × 15–20 reps · descanso 60s</div>
+            <span class="ex-tag tag-rp">Rest-Pause</span>
+            <a class="ex-video" onclick="openVideo('Elevação lateral cabo crossover execução ombro','vg-oilzMBak')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Cabo mantém tensão constante (haltere perde no topo). Rest-pause na 3ª e 4ª série.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">4</div>
+          <div class="ex-info">
+            <div class="ex-name">Peck deck (voador)</div>
+            <div class="ex-sets">3 séries × 12–15 reps · descanso 60s</div>
+            <span class="ex-tag tag-drop">Drop Set</span>
+            <a class="ex-video" onclick="openVideo('Peck deck voador execução peitoral técnica','IFbBXbMvFg0')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Contração total no ponto final. Drop set na última série: -30% até falha.</div>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">5</div>
+          <div class="ex-info">
+            <div class="ex-name">Tríceps francês unilateral + Mergulho no banco</div>
+            <div class="ex-sets">3 rounds · 12 + máx reps · 60s entre rounds</div>
+            <span class="ex-tag tag-ss">Superset</span>
+            <a class="ex-video" onclick="openVideo('Tríceps francês execução cabo unilateral','IChQ14f7GKE')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução: Francês</a>
+            <a class="ex-video" onclick="openVideo('Mergulho triceps banco execução','_GoLBi1fJJA')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução: Mergulho</a>
+          </div>
+        </div>
+        <div class="ex">
+          <div class="ex-num">6</div>
+          <div class="ex-info">
+            <div class="ex-name">Elevação frontal com anilha</div>
+            <div class="ex-sets">3 séries × 12 reps · descanso 60s</div>
+            <a class="ex-video" onclick="openVideo('Elevação frontal anilha ombro execução','c-VO3jWi-SA')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Ver execução correta</a>
+            <div class="ex-tip">Deltóide anterior. Finaliza o volume de ombro da semana.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TÉCNICAS -->
+  <div class="divider-label">Técnicas de intensidade — explicação simples</div>
+  <div class="card">
+    <div class="card-head" onclick="toggleCard('tecnicas')">
+      <div>
+        <div class="card-title">O que significam os badges do treino?</div>
+        <div class="card-sub">Toque para ver explicação de cada técnica</div>
+      </div>
+      <div class="card-icon" id="ico-tecnicas">+</div>
+    </div>
+    <div class="card-body" id="tecnicas">
+
+      <div style="padding:12px 16px;border-bottom:1px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="ex-tag tag-drop" style="margin:0">Drop Set</span>
+          <span style="font-size:13px;font-weight:500;color:#fff">Continuar com menos peso</span>
+        </div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px"><strong style="color:#fff">O que é:</strong> Você termina suas repetições normais, aí imediatamente pega um peso menor (sem descansar) e continua fazendo até não conseguir mais. Simples assim.</p>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px"><strong style="color:#fff">Quando usar:</strong> Somente na última série de exercícios de isolamento — voador, elevação lateral, corda de tríceps, crucifixo.</p>
+        <div style="background:var(--bg3);border-radius:var(--r2);padding:10px 12px;border-left:2px solid var(--accent2)">
+          <p style="font-size:12px;color:var(--text2);line-height:1.5"><strong style="color:var(--accent2)">Exemplo prático:</strong> No voador (peck deck) — faça as 12 reps com o peso normal. Na falha, reduza o pino em ~30% (ex: de 40kg para 28kg) e vá até não conseguir mais. Isso tudo conta como uma série. Faz isso só uma vez, na última.</p>
+        </div>
+      </div>
+
+      <div style="padding:12px 16px;border-bottom:1px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="ex-tag tag-rp" style="margin:0">Rest-Pause</span>
+          <span style="font-size:13px;font-weight:500;color:#fff">Pausa rápida dentro da série</span>
+        </div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px"><strong style="color:#fff">O que é:</strong> Você faz as reps programadas, descansa 15 a 20 segundos (conta mentalmente), e faz mais 3 a 5 reps extras com o mesmo peso. Tudo isso ainda é considerado uma série.</p>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px"><strong style="color:#fff">Quando usar:</strong> Na 3ª e 4ª série da elevação lateral com halteres e da rosca direta.</p>
+        <div style="background:var(--bg3);border-radius:var(--r2);padding:10px 12px;border-left:2px solid var(--accent3)">
+          <p style="font-size:12px;color:var(--text2);line-height:1.5"><strong style="color:var(--accent3)">Exemplo prático:</strong> Na elevação lateral — faça 10 reps normais. Apoie os halteres na coxa, respira fundo por 15 segundos. Faz mais 5 reps. Pronto, série encerrada. Descansa 60 segundos e vai para a próxima.</p>
+        </div>
+      </div>
+
+      <div style="padding:12px 16px;border-bottom:1px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="ex-tag tag-neg" style="margin:0">Negativa</span>
+          <span style="font-size:13px;font-weight:500;color:#fff">Descer bem devagar</span>
+        </div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px"><strong style="color:#fff">O que é:</strong> A fase de descer o peso (que normalmente as pessoas fazem rápido) você faz em 3 a 4 segundos contando. Sobe normal, desce lento. Isso aumenta muito o estímulo para crescimento muscular.</p>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px"><strong style="color:#fff">Quando usar:</strong> Na última série da rosca direta com barra W.</p>
+        <div style="background:var(--bg3);border-radius:var(--r2);padding:10px 12px;border-left:2px solid var(--accent)">
+          <p style="font-size:12px;color:var(--text2);line-height:1.5"><strong style="color:var(--accent)">Exemplo prático:</strong> Na rosca direta — sobe o peso normalmente (1 segundo). Na descida, conta "um... dois... três... quatro" enquanto o braço vai abrindo. Vai doer mais. É isso mesmo que se quer.</p>
+        </div>
+      </div>
+
+      <div style="padding:12px 16px;border-bottom:1px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span class="ex-tag tag-ss" style="margin:0">Superset</span>
+          <span style="font-size:13px;font-weight:500;color:#fff">Dois exercícios seguidos</span>
+        </div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px"><strong style="color:#fff">O que é:</strong> Fazer dois exercícios um atrás do outro sem descanscar entre eles. Você descansa só depois que terminar os dois. Economiza tempo e mantém o músculo trabalhando mais.</p>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px"><strong style="color:#fff">Quando usar:</strong> Apenas nos exercícios de finalização indicados no plano — bíceps + tríceps, prancha + elevação de pernas. Nunca nos exercícios pesados do início (supino, terra, agachamento).</p>
+        <div style="background:var(--bg3);border-radius:var(--r2);padding:10px 12px;border-left:2px solid var(--red)">
+          <p style="font-size:12px;color:var(--text2);line-height:1.5"><strong style="color:var(--red)">Exemplo prático:</strong> Rosca martelo: 10 reps. Sem parar, vai para rosca concentrada: 12 reps. Agora sim descansa 60 segundos. Isso é 1 round. Repete 3 vezes.</p>
+        </div>
+      </div>
+
+      <div style="padding:12px 16px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--accent)">PROGRESSÃO DE CARGA</span>
+          <span style="font-size:13px;font-weight:500;color:#fff">A regra mais importante</span>
+        </div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px"><strong style="color:#fff">O que é:</strong> Toda semana você tenta aumentar um pouquinho a carga ou as repetições nos exercícios compostos (supino, terra, agachamento). Isso é o que faz o músculo crescer de verdade.</p>
+        <div style="background:var(--bg3);border-radius:var(--r2);padding:10px 12px;border-left:2px solid var(--accent)">
+          <p style="font-size:12px;color:var(--text);line-height:1.6"><strong style="color:var(--accent)">Semanas 1–3:</strong> Aprenda o movimento. Foque na técnica. Não force demais ainda.<br><strong style="color:var(--accent)">Semanas 4–6:</strong> Tente colocar mais 2kg por semana nos compostos sempre que completar todas as reps com boa execução.<br><strong style="color:var(--accent)">Semanas 7–8:</strong> Deload — reduza o peso em 40% e descanse o corpo. Mesmos exercícios, carga menor. É obrigatório.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tracker -->
+  <div class="divider-label">Tracker de treinos — semana atual</div>
+  <div class="tracker-wrap">
+    <div class="tracker-title">Toque para marcar sessão concluída</div>
+    <div class="tracker-grid" id="tracker"></div>
+  </div>
+
+</div><!-- /treino -->
+
+<!-- ===================== DIETA ===================== -->
+<div id="dieta" class="page">
+
+  <div class="sec-head">
+    <div class="sec-title"><span>Dieta</span> de Recomposição</div>
+    <div class="sec-desc">Alta proteína · déficit moderado · ajustada para treino noturno</div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric-val">240g</div><div class="metric-label">Proteína / dia</div></div>
+    <div class="metric"><div class="metric-val">2.550</div><div class="metric-label">Kcal / dia treino</div></div>
+    <div class="metric"><div class="metric-val">−350</div><div class="metric-label">Déficit kcal</div></div>
+  </div>
+
+  <div class="alert alert-b">
+    <div class="alert-title">Carbs à noite: obrigatório, não opcional</div>
+    <p>Com treino às 20h, a janela pós-treino cai à noite. Carboidrato pós-treino = insulina = síntese proteica. Quem corta carbs à noite aqui está sabotando a recuperação.</p>
+  </div>
+
+  <div class="divider-label">Plano alimentar — dias de treino (seg–qui)</div>
+  <div class="meal-card">
+    <div class="meal">
+      <div class="meal-time-block"><div class="meal-time">05:45</div><div class="meal-label">Café</div></div>
+      <div class="meal-divider"></div>
+      <div class="meal-info">
+        <div class="meal-name">Café da manhã</div>
+        <div class="meal-desc">2 ovos fritos inteiros + 1 scoop whey + 200ml leite desnatado + 150g morangos</div>
+        <div class="meal-macro">
+          <span class="macro-pill macro-prot">~50g proteína</span>
+          <span class="macro-pill macro-cal">~400 kcal</span>
+          <span class="macro-pill macro-note">gema = precursor de T</span>
+        </div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-time-block"><div class="meal-time">09:30</div><div class="meal-label">Lanche</div></div>
+      <div class="meal-divider"></div>
+      <div class="meal-info">
+        <div class="meal-name">Lanche da manhã</div>
+        <div class="meal-desc">200g frango grelhado (preparado na véspera) + 1 fatia pão integral + 1 fatia queijo minas</div>
+        <div class="meal-macro">
+          <span class="macro-pill macro-prot">~48g proteína</span>
+          <span class="macro-pill macro-cal">~380 kcal</span>
+          <span class="macro-pill macro-note">frango frio funciona</span>
+        </div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-time-block"><div class="meal-time">12:00</div><div class="meal-label">Almoço</div></div>
+      <div class="meal-divider"></div>
+      <div class="meal-info">
+        <div class="meal-name">Almoço — maior refeição</div>
+        <div class="meal-desc">200–220g carne magra (patinho, alcatra ou frango) + 160g arroz branco + brócolis, cenoura ou tomate + fio de azeite</div>
+        <div class="meal-macro">
+          <span class="macro-pill macro-prot">~55g proteína</span>
+          <span class="macro-pill macro-cal">~650 kcal</span>
+          <span class="macro-pill macro-note">azeite = síntese de T</span>
+        </div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-time-block"><div class="meal-time">16:00</div><div class="meal-label">Pré-treino</div></div>
+      <div class="meal-divider"></div>
+      <div class="meal-info">
+        <div class="meal-name">Pré-treino — não pule</div>
+        <div class="meal-desc">40g aveia + 1 scoop whey + 1 banana — shake ou tigela</div>
+        <div class="meal-macro">
+          <span class="macro-pill macro-prot">~30g proteína</span>
+          <span class="macro-pill macro-cal">~380 kcal</span>
+          <span class="macro-pill macro-note">carbo para o treino das 20h</span>
+        </div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-time-block"><div class="meal-time">19:30</div><div class="meal-label">Pré-jantar</div></div>
+      <div class="meal-divider"></div>
+      <div class="meal-info">
+        <div class="meal-name">Pré-jantar leve</div>
+        <div class="meal-desc">150g iogurte grego natural + 1 col. mel ou 10 morangos</div>
+        <div class="meal-macro">
+          <span class="macro-pill macro-prot">~15g proteína</span>
+          <span class="macro-pill macro-cal">~200 kcal</span>
+          <span class="macro-pill macro-note">digestão rápida antes do treino</span>
+        </div>
+      </div>
+    </div>
+    <div class="meal">
+      <div class="meal-time-block"><div class="meal-time">21:30</div><div class="meal-label">Pós-treino</div></div>
+      <div class="meal-divider"></div>
+      <div class="meal-info">
+        <div class="meal-name">Jantar + Pós-treino</div>
+        <div class="meal-desc">Shake: beterraba + 1 scoop whey + morangos + leite desnatado + 40g aveia<br>+ prato: 2 ovos mexidos ou 150g atum + 120g batata-doce ou arroz</div>
+        <div class="meal-macro">
+          <span class="macro-pill macro-prot">~55g proteína</span>
+          <span class="macro-pill macro-cal">~600 kcal</span>
+          <span class="macro-pill macro-note">carbo pós-treino = obrigatório</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-label">Total diário estimado (treino)</div>
+  <div class="info-card">
+    <div class="info-row"><div class="info-label">Proteína</div><div class="info-val"><strong>~253g</strong> (~2,5g/kg para 100kg) — acima do mínimo, margem real de segurança</div></div>
+    <div class="info-row"><div class="info-label">Carboidrato</div><div class="info-val"><strong>~240–260g</strong> — concentrado em almoço, pré-treino e pós-treino</div></div>
+    <div class="info-row"><div class="info-label">Gordura</div><div class="info-val"><strong>~85g/dia</strong> — ovos, azeite, carnes. Não corte. Colesterol é precursor direto de testosterona</div></div>
+    <div class="info-row"><div class="info-label">Total</div><div class="info-val"><strong>~2.500–2.600 kcal</strong> · déficit moderado de 300–400 kcal/dia</div></div>
+  </div>
+
+  <div class="divider-label">Fim de semana — dias sem treino</div>
+  <div class="alert alert-a">
+    <div class="alert-title">Ajuste para dias off</div>
+    <p>Elimine o lanche das 16h (pré-treino). Mantenha todas as outras refeições. Proteína acima de <strong>200g mesmo no descanso</strong> — catabolismo não tira folga.</p>
+  </div>
+
+</div><!-- /dieta -->
+
+<!-- ===================== SUPLEMENTOS ===================== -->
+<div id="suplementos" class="page">
+
+  <div class="sec-head">
+    <div class="sec-title"><span>Suplementação</span></div>
+    <div class="sec-desc">O que tem evidência real para seu contexto específico</div>
+  </div>
+
+  <div class="divider-label">Essenciais — evidência sólida</div>
+  <div class="supp-card">
+    <div class="supp">
+      <div class="supp-badge"><span class="badge badge-g">Essencial</span></div>
+      <div>
+        <div class="supp-name">Whey Protein</div>
+        <div class="supp-dose">2 scoops/dia · manhã + pós-treino</div>
+        <div class="supp-desc">Já usa. Mantenha. Garante a base de proteína sem complicação.</div>
+      </div>
+    </div>
+    <div class="supp">
+      <div class="supp-badge"><span class="badge badge-g">Essencial</span></div>
+      <div>
+        <div class="supp-name">Creatina Monohidratada</div>
+        <div class="supp-dose">5g/dia · qualquer horário · sem loading</div>
+        <div class="supp-desc">Um dos suplementos mais estudados da história. Aumenta força, retém músculo em déficit e melhora performance. Consistência supera timing.</div>
+      </div>
+    </div>
+    <div class="supp">
+      <div class="supp-badge"><span class="badge badge-g">Essencial</span></div>
+      <div>
+        <div class="supp-name">Vitamina D3</div>
+        <div class="supp-dose">4.000–5.000 UI/dia · com almoço (gordura)</div>
+        <div class="supp-desc">Receptores de vitamina D estão nas células de Leydig (produtoras de testosterona). Brasileiro raramente tem nível adequado. Impacto direto no eixo hormonal.</div>
+      </div>
+    </div>
+    <div class="supp">
+      <div class="supp-badge"><span class="badge badge-g">Essencial</span></div>
+      <div>
+        <div class="supp-name">Zinco</div>
+        <div class="supp-dose">25–30mg/dia · última refeição</div>
+        <div class="supp-desc">Cofator essencial da 17β-HSD (enzima da síntese de testosterona). Ciclos anabolizantes depletam zinco. Não ultrapasse 40mg — competição com cobre.</div>
+      </div>
+    </div>
+    <div class="supp">
+      <div class="supp-badge"><span class="badge badge-g">Essencial</span></div>
+      <div>
+        <div class="supp-name">Magnésio Glicinato</div>
+        <div class="supp-dose">300–400mg · 1h antes de dormir</div>
+        <div class="supp-desc">Melhora sono profundo (fases 3–4), reduz cortisol noturno, auxilia recuperação e produção de testosterona. Glicinato ou malato — sem óxido.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-label">Recomendados — evidência moderada</div>
+  <div class="supp-card">
+    <div class="supp">
+      <div class="supp-badge"><span class="badge badge-a">Rec.</span></div>
+      <div>
+        <div class="supp-name">Ômega-3 (EPA+DHA)</div>
+        <div class="supp-dose">2–3g/dia · com refeição</div>
+        <div class="supp-desc">Anti-inflamatório. Melhora sensibilidade à insulina e perfil lipídico. Evidência moderada para testosterona — vale pelo conjunto de benefícios.</div>
+      </div>
+    </div>
+    <div class="supp">
+      <div class="supp-badge"><span class="badge badge-a">Opcional</span></div>
+      <div>
+        <div class="supp-name">Ashwagandha KSM-66</div>
+        <div class="supp-dose">300–600mg · à noite</div>
+        <div class="supp-desc">Evidência moderada para redução de cortisol e suporte à testosterona. Não urgente nos primeiros 3 meses — foque nos essenciais antes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-label">Evite agora</div>
+  <div class="alert alert-r">
+    <div class="alert-title">Pré-treinos estimulantes após 15h</div>
+    <p>Cafeína tem meia-vida de 5–7h. Pré-treino às 19h = cafeína ativa até meia-noite. Sono comprometido → menos GH → menos testosterona → menos resultado. O ciclo vicioso que parece inocente.</p>
+  </div>
+
+</div><!-- /suplementos -->
+
+<!-- ===================== HORMONAL ===================== -->
+<div id="hormonal" class="page">
+
+  <div class="sec-head">
+    <div class="sec-title">Recuperação <span>Hormonal</span></div>
+    <div class="sec-desc">Protocolo pós-Deposteron · 5 meses de uso · 2 meses de pausa</div>
+  </div>
+
+  <div class="alert alert-r">
+    <div class="alert-title">Realidade sem filtro</div>
+    <p>5 meses de Deposteron suprimiu completamente seu eixo hipotálamo-hipófise-gonadal. Com 2 meses de pausa, você está em recuperação ativa — mas longe de níveis normais. Testosterona baixa = catabolismo acelerado, recuperação lenta, resultado travado.</p>
+  </div>
+
+  <div class="divider-label">Protocolos obrigatórios</div>
+  <div class="info-card">
+    <div class="info-row">
+      <div class="info-label">Sono 7–9h</div>
+      <div class="info-val">Pico de LH e testosterona ocorre em sono profundo (fases 3–4). Uma semana com 5–6h reduz T em <strong>10–15%</strong>. Magnésio glicinato + quarto no escuro total + temperatura abaixo de 20°C.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Gordura dietética</div>
+      <div class="info-val">Mínimo <strong>0,8g/kg/dia</strong>. Colesterol é substrato direto da esteroidogênese. Dieta low-fat = testosterona no chão. Ovos inteiros, sardinha, azeite.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Zinco 30mg/noite</div>
+      <div class="info-val">Cofator da 17β-HSD. Ciclos anabolizantes depletam zinco. Tome com a última refeição — não em jejum.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Vitamina D3</div>
+      <div class="info-val">Receptores de D3 estão nas células de Leydig. <strong>4.000–5.000 UI/dia</strong> com gordura para absorção. Deficiência = T cronicamente limitada.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Compostos pesados</div>
+      <div class="info-val">Agachamento e Terra estimulam LH via pico agudo de GH. <strong>2–3x/semana</strong> com cargas reais. HIIT e cardio intenso suprimem — evite.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Cortisol baixo</div>
+      <div class="info-val">Cortisol e testosterona são inversamente relacionados. Treinos máx 90 min, sem cafeína após 15h, meditação ou respiração 10 min/dia.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">Álcool zero</div>
+      <div class="info-val">Etanol inibe LH diretamente <strong>e</strong> aumenta aromatização de T em estrogênio. Nos primeiros <strong>90 dias</strong>: zero. Sem negociação.</div>
+    </div>
+  </div>
+
+  <div class="divider-label">Hábitos que destroem a recuperação</div>
+  <div class="error-block">
+    <div class="error-title">Déficit calórico agressivo</div>
+    <div class="error-desc">Abaixo de -500 kcal/dia com T baixa = catabolismo muscular antes de queimar gordura. Paciente com -350 kcal ganha mais corpo do que impaciente com -700 kcal.</div>
+  </div>
+  <div class="error-block">
+    <div class="error-title">Cardio excessivo</div>
+    <div class="error-desc">Mais de 4h/semana de cardio intenso é catabólico neste contexto. Prefira caminhadas de 30–40 min em dias off — eficaz sem suprimir o eixo.</div>
+  </div>
+  <div class="error-block">
+    <div class="error-title">Privação de sono</div>
+    <div class="error-desc">1 semana de 5–6h de sono reduz testosterona em 10–15%. Você pode treinar e comer perfeitamente e destruir tudo dormindo mal. Sono é o suplemento mais poderoso que existe.</div>
+  </div>
+
+  <div class="alert alert-g">
+    <div class="alert-title">Expectativa realista</div>
+    <p>Recuperação completa do eixo: <strong>3–6 meses</strong> com os protocolos acima. Faça painel hormonal completo (LH, FSH, testosterona total/livre, SHBG, estradiol) agora e repita em 90 dias. Não adivinhe — meça.</p>
+  </div>
+
+</div><!-- /hormonal -->
+
+<!-- ===================== REGRAS ===================== -->
+<div id="regras" class="page">
+
+  <div class="sec-head">
+    <div class="sec-title">5 Regras <span>Não Negociáveis</span></div>
+    <div class="sec-desc">Quebre qualquer uma e os resultados param</div>
+  </div>
+
+  <div class="rule-card">
+    <div class="rule">
+      <div class="rule-num">01</div>
+      <div class="rule-content">
+        <div class="rule-title">Progressão de carga toda semana nos compostos</div>
+        <div class="rule-desc">Se você não aumentou carga ou reps em relação à semana anterior no supino, terra ou agachamento — você não treinou, você se exercitou. Há diferença. Anote tudo. Sem registro não existe progressão — você treina no escuro.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">02</div>
+      <div class="rule-content">
+        <div class="rule-title">Proteína acima de 200g/dia — todos os dias</div>
+        <div class="rule-desc">Incluindo fim de semana. Incluindo dia sem treino. Em déficit calórico com testosterona baixa, o catabolismo muscular acontece 24h por dia. A proteína é o único freio real.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">03</div>
+      <div class="rule-content">
+        <div class="rule-title">Dormir 7h+ como prioridade de performance</div>
+        <div class="rule-desc">Sono não é descanso passivo — é quando 70–80% da síntese proteica acontece, GH é secretado e o eixo hormonal se recupera. Dormir tarde para "terminar mais uma tarefa" é sabotagem disfarçada de produtividade.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">04</div>
+      <div class="rule-content">
+        <div class="rule-title">Treino máximo de 90 minutos — relógio na mão</div>
+        <div class="rule-desc">Acima de 75–90 min o cortisol sobe e a testosterona cai. Com seu eixo em recuperação, esse efeito é amplificado. Treino longo com T baixa = treino catabólico. Corte o supérfluo, não os compostos.</div>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">05</div>
+      <div class="rule-content">
+        <div class="rule-title">Zero álcool nos próximos 90 dias</div>
+        <div class="rule-desc">Etanol suprime diretamente o LH, aumenta aromatização de testosterona em estrogênio e bloqueia síntese proteica por até 48h. Você não pode desperdiçar seu eixo em recuperação num copo de cerveja de sexta.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-label">O que gera resultado rápido (4–6 semanas)</div>
+  <div class="info-card">
+    <div class="info-row"><div class="info-label">Semana 1–2</div><div class="info-val"><strong>Neuroadaptação</strong>: melhora imediata de força sem ganho muscular ainda. Técnica + padrão motor + creatina. Resultado visível: volume muscular pelo inchaço de glicogênio.</div></div>
+    <div class="info-row"><div class="info-label">Semana 3–4</div><div class="info-val"><strong>Densidade</strong>: músculos mais firmes pelo aumento de proteína e redução de gordura subcutânea. Roupa começa a sentar diferente.</div></div>
+    <div class="info-row"><div class="info-label">Semana 5–6</div><div class="info-val"><strong>Resultado visual</strong>: separação muscular visible, peito e ombros mais cheios, braços com mais definição. Com proteína alta + progressão de carga + sono, isso acontece.</div></div>
+  </div>
+
+</div><!-- /regras -->
+
+<!-- ===================== ERROS ===================== -->
+<div id="erros" class="page">
+
+  <div class="sec-head">
+    <div class="sec-title">Erros <span>Fatais</span></div>
+    <div class="sec-desc">O que vai destruir seus resultados mesmo você treinando</div>
+  </div>
+
+  <div class="alert alert-a">
+    <div class="alert-title">Leia isso antes de começar</div>
+    <p>Você pode seguir o plano perfeito e destruir tudo com esses erros. Eles são mais comuns do que parecem — e a maioria das pessoas os comete sem perceber.</p>
+  </div>
+
+  <div class="error-block">
+    <div class="error-title">Erro 1 — Treinar mais dias para "compensar"</div>
+    <div class="error-desc">Mais volume com testosterona baixa = mais cortisol = mais catabolismo. 4 dias bem feitos superam 6 dias mediocres sempre. A tentação de fazer mais é o inimigo número 1 da recomposição em recuperação hormonal.</div>
+  </div>
+
+  <div class="error-block">
+    <div class="error-title">Erro 2 — Déficit calórico acima de -500 kcal/dia</div>
+    <div class="error-desc">Perder peso rápido parece resultado. Não é. Em déficit agressivo com T baixa, o corpo cataboliza músculo antes de tocar na gordura. Você perde o que treinou para construir. Déficit de -350 kcal é o teto agora.</div>
+  </div>
+
+  <div class="error-block">
+    <div class="error-title">Erro 3 — Cortar gordura dietética pensando que emagrece mais rápido</div>
+    <div class="error-desc">Gordura dietética é substrato direto de testosterona. Dieta low-fat com eixo suprimido = testosterona no chão por mais tempo. Gordura não engorda — excesso calórico engorda. São coisas diferentes.</div>
+  </div>
+
+  <div class="error-block">
+    <div class="error-title">Erro 4 — Trocar compostos por isolados porque "sente mais"</div>
+    <div class="error-desc">"Sinto mais no crossover do que no supino" é a frase de quem vai ficar do mesmo tamanho por anos. Sentir não é crescer. Sobrecarga progressiva em compostos é o mecanismo de hipertrofia. Crossover é acessório, não o prato principal.</div>
+  </div>
+
+  <div class="error-block">
+    <div class="error-title">Erro 5 — Pré-treino estimulante às 19–20h</div>
+    <div class="error-desc">Cafeína tem meia-vida de 5–7h. Pré-treino às 19h = cafeína ativa no sangue até meia-noite. Sono comprometido = menos GH = menos recuperação = menos testosterona. O ciclo vicioso invisível que sabota tudo.</div>
+  </div>
+
+  <div class="error-block">
+    <div class="error-title">Erro 6 — Não registrar nada e treinar "por sensação"</div>
+    <div class="error-desc">Memória de treino é ficção. Sem anotar carga, reps e esforço percebido, você repete as mesmas cargas por meses sem perceber. Progressão sem registro é impossível. Um app ou caderno é o suplemento mais barato que existe.</div>
+  </div>
+
+  <div class="error-block">
+    <div class="error-title">Erro 7 — Beber álcool no fim de semana "só um pouco"</div>
+    <div class="error-desc">Etanol suprime LH diretamente, aumenta aromatização e bloqueia síntese proteica por até 48h pós-ingestão. "Só 2 cervejas" no sábado comprometem sua segunda e terça. Nos primeiros 90 dias: zero ou o resultado é parcial.</div>
+  </div>
+
+  <div class="alert alert-g">
+    <div class="alert-title">Resultado visível em 4–6 semanas é real</div>
+    <p>Mas exige que esses 7 erros não aconteçam. Você pode treinar perfeitamente e destruir o resultado dormindo 5h, bebendo no fim de semana e comendo 120g de proteína. O treino é apenas uma parte do sistema.</p>
+  </div>
+
+</div><!-- /erros -->
+
+</div><!-- /main-inner -->
+</div><!-- /main -->
+
+<!-- VIDEO MODAL -->
+<div class="modal-overlay" id="videoModal" onclick="closeVideoModal(event)">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">Execução do exercício</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-frame">
+      <iframe id="modalFrame" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+    </div>
+    <a class="modal-link" id="modalYTLink" href="" target="_blank" rel="noopener">Abrir no YouTube <span>↗</span></a>
+  </div>
+</div>
+
+<!-- BOTTOM NAV (mobile) -->
+<nav class="bottom-nav">
+  <button class="bn-btn on" onclick="goPage('treino',this)" data-nav>
+    <div class="bn-icon"><svg viewBox="0 0 24 24"><path d="M6 4v16M18 4v16M6 12h12"/><circle cx="4" cy="4" r="1.5"/><circle cx="4" cy="20" r="1.5"/><circle cx="20" cy="4" r="1.5"/><circle cx="20" cy="20" r="1.5"/></svg></div>
+    <div class="bn-label">Treino</div>
+  </button>
+  <button class="bn-btn" onclick="goPage('dieta',this)" data-nav>
+    <div class="bn-icon"><svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></div>
+    <div class="bn-label">Dieta</div>
+  </button>
+  <button class="bn-btn" onclick="goPage('suplementos',this)" data-nav>
+    <div class="bn-icon"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V8z"/><polyline points="9,3 9,8 19,8"/><line x1="12" y1="12" x2="12" y2="18"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+    <div class="bn-label">Suplem.</div>
+  </button>
+  <button class="bn-btn" onclick="goPage('hormonal',this)" data-nav>
+    <div class="bn-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+    <div class="bn-label">Hormonal</div>
+  </button>
+  <button class="bn-btn" onclick="goPage('regras',this)" data-nav>
+    <div class="bn-icon"><svg viewBox="0 0 24 24"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+    <div class="bn-label">Regras</div>
+  </button>
+</nav>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><polyline points="18,15 12,9 6,15"/></svg>
+</button>
+
+<script>
+// VIDEO MODAL
+function openVideo(title, videoId) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalFrame').src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+  document.getElementById('modalYTLink').href = 'https://www.youtube.com/watch?v=' + videoId;
+  document.getElementById('videoModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('videoModal').classList.remove('open');
+  document.getElementById('modalFrame').src = '';
+  document.body.style.overflow = '';
+}
+function closeVideoModal(e) {
+  if (e.target === document.getElementById('videoModal')) closeModal();
+}
+
+// PAGE NAV
+function goPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.bn-btn').forEach(b => b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  if (btn) btn.classList.add('on');
+  // sync top nav
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'"+id+"'")) b.classList.add('on');
+  });
+  document.querySelectorAll('[data-nav]').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'"+id+"'")) b.classList.add('on');
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// CARD TOGGLE
+function toggleCard(id) {
+  const body = document.getElementById(id);
+  const ico = document.getElementById('ico-'+id);
+  body.classList.toggle('open');
+  if(ico) ico.classList.toggle('open');
+}
+
+// SCROLL TO TOP
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTop');
+  btn.classList.toggle('visible', window.scrollY > 300);
+});
+
+// TRACKER
+const TRACKER_KEY = 'plano_elite_tracker';
+function loadTracker() {
+  try { return JSON.parse(localStorage.getItem(TRACKER_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+function saveTracker(data) {
+  try { localStorage.setItem(TRACKER_KEY, JSON.stringify(data)); } catch(e){}
+}
+function renderTracker() {
+  const grid = document.getElementById('tracker');
+  if (!grid) return;
+  const done = loadTracker();
+  const days = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+  grid.innerHTML = '';
+  days.forEach((d, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'tracker-cell' + (done.includes(i) ? ' done' : '');
+    cell.textContent = d;
+    cell.style.fontSize = '10px';
+    cell.style.fontWeight = '500';
+    cell.onclick = () => {
+      const current = loadTracker();
+      const idx = current.indexOf(i);
+      if (idx > -1) current.splice(idx, 1);
+      else current.push(i);
+      saveTracker(current);
+      renderTracker();
+    };
+    grid.appendChild(cell);
+  });
+}
+renderTracker();
+</script>
+</body>
+</html>
